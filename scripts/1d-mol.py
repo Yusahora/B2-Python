@@ -18,7 +18,6 @@ import re
 reg = re.compile('^[0-9]+')
 solution = random.randint(0, 100)
 rep = -1
-print(solution)
 
 #on créé la fonction de fin
 def au_revoir():
