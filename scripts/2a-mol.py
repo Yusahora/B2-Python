@@ -18,7 +18,6 @@ import re
 reg = re.compile('^[0-9]+')
 solution = random.randint(0, 100)
 end = False
-print(solution)
 #on créé la fonction de fin
 def fin():
     print("Au revoir, merci d'avoir jouer")
