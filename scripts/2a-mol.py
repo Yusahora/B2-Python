@@ -49,9 +49,7 @@ while end is False :
     saisi = read_file()
      #On vérifie la saisie utilisateur
     if re.match("^[0-9]+$", saisi):
-        saisi = int(saisi)
-        if saisi > 100:
-            continue          
+        saisi = int(saisi)          
         if saisi > solution :
             write_file('Trop grand !')       
         elif saisi < solution :
