@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
-#1c-moy
-#creer un dictionnaire de nom/note et ressort les 5 meilleurs note
-#15/10/2018
-#Felix Ollivier Drolshagen
+# 1c-moy
+# creer un dictionnaire de nom/note et ressort les 5 meilleurs note
+# 15/10/2018
+#  Felix Ollivier Drolshagen
 import re
 import operator
 
-#on creer une regex pour verifier les entrees utilisateurs
+# on creer une regex pour verifier les entrees utilisateurs
 reg = re.compile('^[a-zA-Z]+$')
 reg2 = re.compile('^[0-9]+')
 
-Dict ={}
+Dict = {}
 best = []
 loop = 0
 sum = 0
@@ -24,12 +24,12 @@ while loop == 0:
                 best = Dict[liste]
                 sum += int(best)
             print("moyenne est égale a ")
-            moy = round (sum / len(Dict), 2)
+            moy = round(sum / len(Dict), 2)
             print(moy)
             print("liste des notes")
-            print(sorted(Dict.items(), key=operator.itemgetter(1), reverse = True)[:5])
+            print(sorted(Dict.items(), key=operator.itemgetter(1), reverse=True)[:5])
             break
-    
+
         else:
 
             print("saisissez votre note")
