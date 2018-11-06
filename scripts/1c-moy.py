@@ -27,7 +27,9 @@ while loop == 0:
             moy = round(sum / len(Dict), 2)
             print(moy)
             print("liste des notes")
-            print(sorted(Dict.items(), key=operator.itemgetter(1), reverse=True)[:5])
+            print(sorted(Dict.items(),
+                         key=operator.itemgetter(1),
+                         reverse=True)[:5])
             break
 
         else:

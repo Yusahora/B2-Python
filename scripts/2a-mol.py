@@ -43,13 +43,14 @@ def read_file():
 
 
 def stop_ctrlC(sig, frame):
-    write_file('Pas ouf de CTRL+C ')
+    write_file("Pas ouf de CTRL+C ")
     exit()
 
 
 signal.signal(signal.SIGINT, stop_ctrlC)
 
 write_file("Veuillez entrez un chiffre entre 0 et 100")
+print(solution)
 
 # on initialise la boucle pour le jeu
 while end is False:
@@ -59,10 +60,11 @@ while end is False:
     if reg.match(saisi):
         saisi = int(saisi)
         if saisi > solution:
-            write_file('Trop grand !')
+            write_file("Trop grand !")
         elif saisi < solution:
-            write_file('Trop petit !')
+            write_file("Trop petit !")
         # Fin du jeu et fin de la boucle
         else:
+            write_file("Bien jouer")
             end = True
             fin()
