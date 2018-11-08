@@ -14,15 +14,19 @@ import random
 # on import le module re
 import re
 
-# on créé les variables nécessaires
-reg = re.compile('^[0-9]+')
-solution = random.randint(0, 100)
-end = False
+# fonction anti ctrlC
+
+
+def stop_ctrlC(sig, frame):
+   fin()
+
+
+signal.signal(signal.SIGINT, stop_ctrlC)
 # on créé la fonction de fin
 
 
 def fin():
-    print("Au revoir, merci d'avoir jouer")
+    print("\b\bAu revoir, merci d'avoir jouer")
     exit()
 # on créé la fonction pour écrire dans un fichier
 
@@ -39,15 +43,12 @@ def read_file():
     msg = file.read()
     file.close()
     return msg
-# fonction anti ctrlC
 
 
-def stop_ctrlC(sig, frame):
-    write_file("Pas ouf de CTRL+C ")
-    exit()
-
-
-signal.signal(signal.SIGINT, stop_ctrlC)
+# on créé les variables nécessaires
+reg = re.compile('^[0-9]+')
+solution = random.randint(0, 100)
+end = False
 
 write_file("Veuillez entrez un chiffre entre 0 et 100")
 print(solution)

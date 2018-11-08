@@ -17,13 +17,15 @@ import re
 # on importe le module time
 import time
 
-# on créé les variables nécessaires
-solution = random.randint(0, 100)
-end = False
-count = 0
-borneSup = 100
-borneInf = 0
-rep = 0
+# on créé la fonction pour empecher le ctr+c
+
+
+def ctrlC(sig, frame):
+    print('\b\ba plus tard')
+    exit()
+
+
+signal.signal(signal.SIGINT, ctrlC)
 
 
 # on créé la fonction de fin
@@ -46,6 +48,15 @@ def write_file(msg):
     file = open("jeu.txt", "w")
     file.write(msg)
     file.close()
+
+
+# on créé les variables nécessaires
+solution = random.randint(0, 100)
+end = False
+count = 0
+borneSup = 100
+borneInf = 0
+rep = 0
 # on initialise la boucle pour le jeu
 
 

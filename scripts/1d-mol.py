@@ -14,6 +14,15 @@ import random
 # on import le module re
 import re
 
+# on créé la fonction pour empecher le ctr+c
+
+
+def fin(sig, frame):
+    au_revoir()
+
+
+signal.signal(signal.SIGINT, fin)
+
 # on créé les variables nécessaires
 reg = re.compile('^[0-9]+')
 solution = random.randint(0, 100)
@@ -26,16 +35,9 @@ def au_revoir():
     print("\b\bmerci d'avoir jouer la solution était ", solution)
     exit()
 
-# on créé la fonction pour empecher le ctr+c
-
-
-def fin(sig, frame):
-    au_revoir()
-
-
-signal.signal(signal.SIGINT, fin)
-
 # on créé une boucle pour le jeu avec les tests nécessaire
+
+
 while rep != str(solution):
     print('entrer un nombre')
     rep = input()
