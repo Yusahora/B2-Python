@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+
+# 1d-mol
+# script d'archivage
+# 23/10/2018
+# Felix Ollivier Drolshagen
+
+# import des diverses modules
+import signal
+import shutil
+import gzip
+import os
+import sys
+import argparse
+
+# fonction anti ctrlC
+
+
+def ctrlC(sig, frame):
+    deleteBackup()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, ctrlC)
+
+
+# Fonction qui cree une Backup
+
+
+def makeBackup():
+    os.remove(data_path + '/backup.tar.gz')
+    shutil.move(backup + '.tar.gz', data_path)
+
+# Fontion qui supprime la Backup déjà existante
+
+
+def deleteBackup():
+    if os.path.exists(backup + '.tar.gz'):
+        os.remove(backup + '.tar.gz')
+
+
+def find_path():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--path", help="Lien vers le dossier a archiver")
+    args = parser.parse_args()
+    if args.path:
+        return args.path
+    else:
+        return '~/B2-Python/scripts'
+
+# Variables
+
+
+data_path = os.path.expanduser('~/data/')
+directory_path = os.path.expanduser(find_path())
+backup = os.path.expanduser('~/backup')
+disk_capacity = os.system("df -h | grep '%s'")
+
+
+try:
+    os.makedirs(data_path, exist_ok=True)
+except OSError:
+    if not os.path.isdir(data_path):
+        os.system("mkdir data_path")
+
+
+for partition in ['/home', '/var']:
+    sys.stdout.write(
+        "Espace libre de la partition " + partition + " : " +
+        str(disk_capacity) + "G\n")
+
+if disk_capacity > 3:
+    if os.access(data_path, os.W_OK and os.R_OK):
+
+        # On crée une backup
+        shutil.make_archive(backup, 'gztar', directory_path)
+
+        # On regarde si une ancienne backup existe
+        if os.path.exists(data_path + '/backup.tar.gz'):
+
+            # On va lire à l'interieur de la backup existante
+            with gzip.open(data_path + '/backup.tar.gz', 'rb') as f:
+                exist_save = f.read()
+            # On va lire la nouvelle backup
+            with gzip.open(backup + '.tar.gz', 'rb') as f:
+                new_save = f.read()
+
+            # On compare les deux
+            if exist_save != new_save:
+                # On remplace l'ancienne par la nouvel
+                makeBackup()
+                sys.stdout.write('Succes : La sauvegarde a été effectuer\n')
+            # on gère toute les erreurs possible
+            else:
+                deleteBackup()
+                sys.stdout.write('Erreur : La sauvegarde existe déjà\n')
+
+        else:
+            shutil.move(backup + '.tar.gz', data_path)
+            sys.stdout.write('Succes : La sauvegarde a été effectuer\n')
+
+    else:
+        sys.stderr.write('Erreur : Vous n\'avez pas les droits nécessaire\n')
+
+else:
+    sys.stderr.write('Il n\'y a pas assez d\'espace libre sur la partition')

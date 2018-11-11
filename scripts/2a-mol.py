@@ -18,7 +18,7 @@ import re
 
 
 def stop_ctrlC(sig, frame):
-   fin()
+    fin()
 
 
 signal.signal(signal.SIGINT, stop_ctrlC)
